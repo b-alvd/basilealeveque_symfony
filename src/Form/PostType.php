@@ -22,14 +22,13 @@ class PostType extends AbstractType
     {
         $builder
             ->add('id_user_post', null, [
+                'label' => 'Auteur',
                 'data' => $this->security->getUser()->getId(),
                 'disabled' => true,
                 'mapped' => false,
             ])
-            ->add('image')
-            ->add('content')
-            // ->add('post_like')
-            // ->add('post_comment')
+            ->add('image', null, ['label' => 'Image'])
+            ->add('content', null, ['label' => 'Contenu'])
             ->add('Valider', SubmitType::class)
         ;
     }
@@ -41,4 +40,3 @@ class PostType extends AbstractType
         ]);
     }
 }
-

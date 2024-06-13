@@ -9,13 +9,15 @@
         <ul>
             <li><a href=""></a></li>
         </ul>
-        <ul>
-            <li><a href=""></a></li>
-        </ul>
         {% if app.user %}
-        <ul>
-            <li><a href="">Profil</a></li>
-        </ul>
+            <ul>
+                <li><a href=" {{ path('app_post') }} ">Créer un post</a></li>
+            </ul>
+        {% endif %}
+        {% if app.user %}
+            <ul>
+                <li><a href="">Profil</a></li>
+            </ul>
         {% endif %}
         <ul>
             {% if app.user %}
