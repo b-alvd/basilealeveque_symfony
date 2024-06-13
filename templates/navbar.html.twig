@@ -1,0 +1,28 @@
+<nav>
+    <div class="nav_logo">
+        <a href=" {{ path('app_index') }} ">Am-Stam-Gram</a>
+    </div>
+    <div class="nav_links">
+        <ul>
+            <li><a href=" {{ path('app_index') }} ">Accueil</a></li>
+        </ul>
+        <ul>
+            <li><a href=""></a></li>
+        </ul>
+        <ul>
+            <li><a href=""></a></li>
+        </ul>
+        {% if app.user %}
+        <ul>
+            <li><a href="">Profil</a></li>
+        </ul>
+        {% endif %}
+        <ul>
+            {% if app.user %}
+                <li><a class="auth_button" href=" {{ path('app_logout') }} ">Se déconnecter</a></li>
+            {% else %}
+                <li><a class="auth_button" href=" {{ path('app_login') }} ">Se connecter</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
