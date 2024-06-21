@@ -1,5 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Am-Stam-Gram{% endblock %}
+{% block title %}Am-Stam-Gram | Accueil{% endblock %}
 
-{% block body %}{% endblock %}
+{% block body %}
+    {% for post in posts %}
+        <div class="post">
+            <div class="post_infos">
+                <a href="{{ path('app_profile', { 'username': post.user.username }) }}">{{ post.user.username }}</a>
+                <a href="/post/{{ post.id }}">Voir le post</a>
+                <p>{{ post.createdAt|date('d/m/Y H:i:s') }}</p>
+            </div>
+            <div class="post_content">
+                <img src="{{ asset('uploads/post/' ~ post.image) }}" alt="">
+                <p>{{ post.content }}</p>
+            </div>
+            <div class="separator"></div>
+            <div class="post_stats">
+                <div class="likes">
+                    <h3>Likes: </h3>
+                    <p>{{ post.likes|length }}</p>
+                </div>
+                <div class="comments">
+                    <h3>Comments: </h3>
+                    <p>{{ post.comments|length }}</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

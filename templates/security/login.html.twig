@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Am-Stam-Gram | Login{% endblock %}
+{% block title %}Am-Stam-Gram | Connexion{% endblock %}
 
 
 {% block body %}
@@ -22,5 +22,7 @@
 
             <button type="submit">Se connecter</button>
         </form>
+
+        <a href="{{ path('app_register') }}">Pas de compte ? S'enregistrer</a>
     {% endif %}
 {% endblock %}

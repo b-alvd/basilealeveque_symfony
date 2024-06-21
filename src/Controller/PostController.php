@@ -2,24 +2,20 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
+use App\Entity\Like;
 use App\Entity\Post;
+use App\Form\CommentType;
 use App\Form\PostType;
+use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 class PostController extends AbstractController
 {
-    private $security;
-
-    public function __construct(Security $security)
-    {
-        $this->security = $security;
-    }
-
     #[Route('/post/new', name: 'app_post')]
     public function index(Request $request, EntityManagerInterface $em): Response
     {
@@ -29,14 +25,14 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Assigner l'ID de l'utilisateur connecté
-            $post->setIdUserPost($this->security->getUser()->getId());
+            $post->setUser($this->getUser());
+            $post->setPostComment(0);
+            $post->setPostLike(0);
             $post->setCreatedAt(new \DateTimeImmutable());
-            
+
             $em->persist($post);
             $em->flush();
 
-            // Rediriger ou faire quelque chose après la sauvegarde
             return $this->redirectToRoute('app_index');
         }
 
@@ -45,35 +41,82 @@ class PostController extends AbstractController
         ]);
     }
 
-    // #[Route('/post/{id}', name: 'app_post_show')]
-    // public function show(): Response
-    // {
-    //     return $this->render('post/show.html.twig', [
-    //         'controller_name' => 'PostController',
-    //     ]);
-    // }
+    #[Route('/post/{id}', name: 'app_post_show')]
+    public function show(Post $post, Request $request, PostRepository $postRepository, EntityManagerInterface $em, int $id): Response
+    {
+        $post = $postRepository->find($id);
 
-    // #[Route('/post/all', name: 'app_post_all')]
-    // public function all(): Response
-    // {
-    //     return $this->render('post/all.html.twig', [
-    //         'controller_name' => 'PostController',
-    //     ]);
-    // }
+        $comment = new Comment();
+        $commentForm = $this->createForm(CommentType::class, $comment);
+        $commentForm->handleRequest($request);
 
-    // #[Route('/post/{id}/edit', name: 'app_post_edit')]
-    // public function edit(): Response
-    // {
-    //     return $this->render('post/edit.html.twig', [
-    //         'controller_name' => 'PostController',
-    //     ]);
-    // }
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            $comment->setAuthor($this->getUser());
+            $comment->setPost($post);
+            $comment->setCreatedAt(new \DateTimeImmutable());
 
-    // #[Route('/post/{id}/delete', name: 'app_post_delete')]
-    // public function delete(): Response
-    // {
-    //     return $this->render('post/delete.html.twig', [
-    //         'controller_name' => 'PostController',
-    //     ]);
-    // }
+            $em->persist($comment);
+            $em->flush();
+        
+            return $this->redirectToRoute('app_post_show', ['id' => $post->getId()]);
+        }
+
+        return $this->render('post/show.html.twig', [
+            'post' => $post,
+            'commentForm' => $commentForm->createView()
+        ]);
+    }
+
+    #[Route('/post/{id}/like', name: 'app_post_like', methods: ['POST'])]
+    public function like(Post $post, PostRepository $postRepository, EntityManagerInterface $em, int $id): Response
+    {
+        $post = $postRepository->find($id);
+        $user = $this->getUser();
+
+        $like = $post->getLikes()->filter(fn($like) => $like->getUser() === $user)->first();
+
+        if ($like) {
+            $em->remove($like);
+        } else {
+            $like = new Like();
+            $like->setUser($user);
+            $like->setPost($post);
+            $em->persist($like);
+        }
+
+        $em->flush();
+
+        return $this->redirectToRoute('app_post_show', ['id' => $post->getId()]);
+    }
+
+    #[Route('/post/{id}/edit', name: 'app_post_edit')]
+    public function edit(Request $request, int $id, EntityManagerInterface $em): Response
+    {
+        $post = $em->getRepository(Post::class)->find($id);
+        if (!$post) {
+            throw $this->createNotFoundException('Post not found');
+        }
+
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+
+            return $this->redirectToRoute('app_profile', ['username' => $post->getUser()->getUsername()]);
+        }
+
+        return $this->render('post/edit.html.twig', [
+            'postForm' => $form->createView(),
+            'post' => $post,
+        ]);
+    }
+
+    #[Route('/post/{id}/delete', name: 'app_post_delete')]
+    public function delete(Post $post, EntityManagerInterface $em): Response
+    {
+        $em->remove($post);
+        $em->flush();
+
+        return $this->redirectToRoute('app_profile', ['username' => $post->getUser()->getUsername()]);
+    }
 }

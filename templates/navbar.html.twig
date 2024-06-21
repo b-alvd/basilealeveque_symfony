@@ -6,17 +6,19 @@
         <ul>
             <li><a href=" {{ path('app_index') }} ">Accueil</a></li>
         </ul>
-        <ul>
-            <li><a href=""></a></li>
-        </ul>
+
         {% if app.user %}
+            <ul>
+                <li><a href=" {{ path('app_profile_all') }}">Tous les profils</a></li>
+            </ul>
+            <ul>
+                <li><a href=" {{ path('all_friend_requests') }} ">Demandes d'amitié</a></li>
+            </ul>
             <ul>
                 <li><a href=" {{ path('app_post') }} ">Créer un post</a></li>
             </ul>
-        {% endif %}
-        {% if app.user %}
             <ul>
-                <li><a href="">Profil</a></li>
+                <li><a href=" {{ path('app_profile', { 'username': app.user.username }) }} ">Profil | {{ app.user.username }}</a></li>
             </ul>
         {% endif %}
         <ul>

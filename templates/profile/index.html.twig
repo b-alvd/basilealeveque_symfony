@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Am-Stam-Gram | Profil d'utilisateur{% endblock %}
+
+{% block body %}
+    <section id="profile">
+        <div class="profile_infos">
+            <div class="profile_name">
+                <h1>Profil: {{ user.username }}</h1>
+                <p>Créé le {{ user.createdAt|date('d/m/Y') }}</p>
+            </div>
+            <div class="profile_stats">
+                <h1>Amitiés</h1>
+                <p>{{ friendshipCount }}</p>
+            </div>
+            <div class="profile_actions">
+                {% if app.user == user %}
+                    <a href=" {{ path('app_profile_edit', { 'username': user.username }) }} ">Modifier le profil</a>
+                {% else %}
+                    {% if isFriend %}
+                        <a href="{{ path('delete_friend', { 'username': user.username }) }}">Se désabonner</a>
+                    {% elseif isPending %}
+                        <a href="{{ path('annul_friend_request', { 'username': user.username }) }}">En attente...</a>
+                    {% else %}
+                        <a href="{{ path('send_friend_request', { 'username': user.username }) }}">S'abonner</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="profile_posts">
+            {% if posts|length == 0 %}
+                <p>Cet utilisateur n'a pas encore posté de message.</p>
+            {% else %}
+                <div class="post_containter">
+                    {% for post in posts %}
+                        <div class="post_content">
+                            <img src="{{ asset('uploads/post/' ~ post.image) }}" alt="">
+                            <p class="post_paragraph">{{ post.content }}</p>
+                            <h3>Posté le {{ post.createdAt|date('d/m/Y à H:i') }}</h3>
+                            <div class="separator"></div>
+                            <div class="post_stats">
+                                <div class="likes">
+                                    <h4>Likes: </h4>
+                                    <p>{{ post.likes|length }}</p>
+                                </div>
+                                <div class="comments">
+                                    <h4>Comments: </h4>
+                                    <p>{{ post.comments|length }}</p>
+                                </div>
+                            </div>
+                            <div class="post_actions">
+                                {% if app.user == post.user %}
+                                    <a href="{{ path('app_post_edit', { 'id': post.id }) }}">Modifier le post</a>
+                                    <a href="{{ path('app_post_delete', { 'id': post.id }) }}">Supprimer le post</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

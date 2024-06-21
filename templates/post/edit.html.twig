@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Am-Stam-Gram | Modifier un post{% endblock %}
+
+{% block body %}
+    {% if postForm is defined and postForm.vars is defined and postForm.vars.data is defined %}
+        <div>
+            <form method="post">
+                <label for="image">Image</label>
+                {# <input type="text" name="{{ field_name(postForm.image) }}" id="image" value="{{ field_value(postForm.image) }}"> #}
+                {{ form_row(postForm.imageFile) }}
+                <label for="content">Contenu</label>
+                <textarea name="{{ field_name(postForm.content) }}" id="content" value="{{ field_value(postForm.content) }}"> {{ postForm.vars.data.content }} </textarea>
+                {{ form_end(postForm) }}
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}

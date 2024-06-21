@@ -1,11 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Am-Stam-Gram | Post{% endblock %}
+{% block title %}Am-Stam-Gram | Créer un post{% endblock %}
 
 {% block body %}
-    <h1>Créer un post</h1>
-
     <div>
-        {{ form(postForm) }}
+        <form method="post" enctype="multipart/form-data">
+            <h1>Créez un post!</h1>
+            <label for="user">Auteur</label>
+            <input type="text" name="{{ field_name(postForm.id_user_post) }}" id="user" value="{{ field_value(postForm.id_user_post) }}" disabled>
+            <label for="image">Image</label>
+            <input type="file" name="{{ field_name(postForm.imageFile) }}" id="image" value="{{ field_value(postForm.imageFile) }}">
+            <label for="content">Contenu</label>
+            <textarea name="{{ field_name(postForm.content) }}" id="content" value="{{ field_value(postForm.content) }}"></textarea>
+            {{ form_end(postForm) }}
+        </form>
     </div>
 {% endblock %}

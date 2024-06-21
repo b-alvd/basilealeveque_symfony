@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Am-Stam-Gram | Demandes d'amitié{% endblock %}
+
+{% block body %}
+    <div class="all_friend_requests">
+        <h1>Demandes d'amitié</h1>
+        <ul>
+            {% for relation in requestedRelations %}
+                <div>
+                    <li>
+                        <p>{{ relation.user1.username }}</p>
+                        <div class="relations_actions">
+                            <a href="{{ path('accept_friend_request', { 'username': relation.user1.username }) }}">Accepter</a>
+                            <a href="{{ path('reject_friend_request', { 'username': relation.user1.username }) }}">Refuser</a>
+                        </div>
+                    </li>
+                </div>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

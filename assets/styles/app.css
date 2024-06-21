@@ -3,16 +3,20 @@
 @tailwind utilities;
 
 body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin: 0;
     background-color: #333333;
 }
 
-h1 {
-    color: #ffffff;
-    text-align: center;
-    font-size: 20px;
-    margin: 10px;
-    text-decoration: underline 3px #c49600;
+.separator {
+    width: 85%;
+    height: 3px;
+    margin: 20px 0;
+    border-radius: 100px;
+    background-color: #ffffff;
 }
 
 form {
@@ -22,11 +26,29 @@ form {
     justify-content: center;
     padding: 10px;
 }
+form h1 {
+    color: #ffffff;
+    text-align: center;
+    font-size: 20px;
+    margin: 10px;
+    text-decoration: underline 3px #c49600;
+}
 form label {
     color: #ffffff;
     font-size: 13px;
 }
-form input[type="email"], form input[type="password"] {
+form input, input[type="email"], form input[type="text"], form input[type="password"] {
+    width: 300px;
+    margin-bottom: 10px;
+    padding: 3px 5px;
+    border-radius: 5px;
+    border: none;
+    font-size: 13px;
+}
+form textarea {
+    color: #000000;
+    width: 300px;
+    height: 50px;
     margin-bottom: 10px;
     padding: 3px 5px;
     border-radius: 5px;
@@ -44,6 +66,16 @@ form button {
 }
 form button:hover {
     background-color: #b38e00;
+}
+form a {
+    color: #ffffff;
+    font-size: 13px;
+    margin-top: 30px;
+    text-decoration: underline;
+    transition: all 0.3s ease;
+}
+form a:hover {
+    color: #c49600;
 }
 
 nav {
@@ -67,7 +99,7 @@ nav div.nav_logo a:hover {
     color: #c49600;
 }
 nav div.nav_links ul {
-    margin: 0 5px;
+    margin: 20px;
 }
 nav div.nav_links ul li a:hover {
     text-decoration: underline;
@@ -75,9 +107,376 @@ nav div.nav_links ul li a:hover {
 nav div.nav_links ul li .auth_button {
     background-color: #c49600;
     padding: 3px 5px;
-    margin: 0 15px;
     border-radius: 5px;
 }
 nav div.nav_links ul li .auth_button:hover {
     background-color: #b38e00;
+}
+
+.post {
+    max-width: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin: 30px;
+    border-radius: 5px;
+    background-color: #424242;
+}
+.post .post_infos {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    color: #ffffff;
+    font-weight: 600;
+}
+.post .post_infos a {
+    text-decoration: underline;
+}
+.post .post_infos a:hover {
+    text-decoration: underline #c49600 3px;
+}
+.post .post_content {
+    width: 100%;
+    padding: 20px;
+    margin: 10px;
+}
+.post .post_content img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.post .post_content p {
+    color: #ffffff;
+    font-size: 20px;
+    margin-top: 30px;
+}
+.post .separator {
+    width: 85%;
+    height: 3px;
+    border-radius: 100px;
+    background-color: #ffffff;
+}
+.post .post_stats {
+    width: 100%;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+    color: #ffffff;
+    font-weight: 600;
+}
+.post .post_stats .likes, .post .post_stats .comments {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.post .post_stats .likes p, .post .post_stats .comments p {
+    font-weight: 100;
+}
+
+.show_post {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin: 70px;
+    border-radius: 5px;
+    background-color: #424242;
+}
+.show_post .show_post_infos {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 20px;
+}
+.show_post .show_post_infos a {
+    text-decoration: underline;
+}
+.show_post .show_post_infos a:hover {
+    text-decoration: underline #c49600 3px;
+}
+.show_post .show_post_content {
+    width: 100%;
+    padding: 20px;
+    margin: 10px;
+}
+.show_post .show_post_content img {
+    width: 70%;
+    margin: 0 auto;
+}
+.show_post .show_post_content p {
+    color: #ffffff;
+    font-size: 20px;
+    margin-top: 30px;
+}
+.show_post .show_post_stats {
+    width: 100%;
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+    color: #ffffff;
+    font-weight: 600;
+}
+.show_post .show_post_stats .likes, .show_post .show_post_stats .comments {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.show_post .show_post_stats .likes p, .show_post .show_post_stats .comments p {
+    font-weight: 100;
+}
+.show_post .show_post_stats_actions {
+    width: 100%;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+    color: #ffffff;
+    font-weight: 600;
+}
+.show_post .show_post_stats_actions h2 {
+    font-size: 20px;
+    text-decoration: underline #c49600;
+}
+.show_post .show_post_stats_actions .comments {
+    margin-top: 20px;
+}
+.show_post .show_post_stats_actions .comments div {
+    margin-top: 10px;
+}
+.show_post .show_post_stats_actions .comments div a {
+    text-decoration: underline;
+}
+.show_post .show_post_stats_actions .comments div a:hover {
+    text-decoration: underline #c49600 3px;
+}
+.show_post .show_post_stats_actions .comments div p {
+    font-weight: 100;
+}
+
+#profile {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin: 70px;
+}
+#profile .profile_infos {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+    padding: 10px;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 20px;
+}
+#profile .profile_infos .profile_name p {
+    font-weight: 100;
+    font-size: 13px;
+}
+#profile .profile_infos .profile_stats p {
+    font-weight: 100;
+    font-size: 15px;
+}
+#profile .profile_infos .profile_actions a {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #c49600;
+    font-size: 13px;
+    transition: all 0.3s ease;
+}
+#profile .profile_infos .profile_actions a:hover {
+    background-color: #b38e00;
+}
+#profile .profile_posts {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin: 70px;
+}
+#profile .profile_posts .post_containter {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+}
+#profile .profile_posts .post_containter .post_content {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: #424242;
+}
+#profile .profile_posts .post_containter .post_content .post_paragraph {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    max-height: 4em;
+    line-height: 2em;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: white;
+    background-color: #4d4d4d;
+}
+#profile .profile_posts .post_containter .post_content h3 {
+    padding-top: 20px;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+}
+#profile .profile_posts .post_containter .post_content .post_stats {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+    width: 100%;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 15px;
+}
+#profile .profile_posts .post_containter .post_content .post_actions {
+    width: 100%;
+    margin-top: 15px;
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+    color: white;
+}
+#profile .profile_posts .post_containter .post_content .post_actions a:nth-child(1) {
+    padding: 5px 10px;
+    background-color: orange;
+    border-radius: 5px;
+}
+#profile .profile_posts .post_containter .post_content .post_actions a:nth-child(2) {
+    padding: 5px 10px;
+    background-color: red;
+    border-radius: 5px;
+}
+
+.all_profiles {
+    width: 90%;
+    color: #ffffff;
+}
+.all_profiles h1 {
+    text-align: center;
+    font-size: 20px;
+    color: #ffffff;
+}
+.all_profiles ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    margin-top: 5vh;
+    text-align: center;
+}
+.all_profiles ul div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #424242;
+}
+.all_profiles ul div li a {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #c49600;
+    font-size: 13px;
+    transition: all 0.3s ease;
+}
+.all_profiles ul div li a:hover {
+    background-color: #b38e00;
+}
+
+.all_friend_requests {
+    width: 90%;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.all_friend_requests h1 {
+    margin: 20px 0;
+    text-align: center;
+    font-size: 20px;
+    color: #ffffff;
+    text-decoration: underline #c49600;
+}
+.all_friend_requests ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    margin-top: 5vh;
+    text-align: center;
+}
+.all_friend_requests ul div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #424242;
+}
+.all_friend_requests ul div li div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.all_friend_requests ul div li div a:nth-child(1) {
+    padding: 5px 10px;
+    margin: 0 10px;
+    border-radius: 5px;
+    background-color: green;
+    font-size: 13px;
+    transition: all 0.3s ease;
+}
+.all_friend_requests ul div li div a:nth-child(2) {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: red;
+    font-size: 13px;
+    transition: all 0.3s ease;
+}
+.all_friend_requests ul div li div a:nth-child(1):hover {
+    background-color: #00b300;
+}
+.all_friend_requests ul div li div a:nth-child(2):hover {
+    background-color: #b30000;
 }

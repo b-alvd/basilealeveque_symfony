@@ -17,18 +17,27 @@ class AppFixtures extends Fixture
     {
         $user = new User();
         $user
-            ->setEmail("user@amstamgram.com")
-            ->setUsername("user")
-            ->setRoles(["ROLE_USER"])
+            ->setEmail('user@amstamgram.com')
+            ->setUsername('user')
+            ->setRoles(['ROLE_USER'])
+            ->setPassword($this->hasher->hashPassword($user,"user"))
+            ->setCreatedAt(new \DateTimeImmutable());
+        $manager->persist($user);
+
+        $user = new User();
+        $user
+            ->setEmail('basile@amstamgram.com')
+            ->setUsername('Basile')
+            ->setRoles(['ROLE_USER'])
             ->setPassword($this->hasher->hashPassword($user,"user"))
             ->setCreatedAt(new \DateTimeImmutable());
         $manager->persist($user);
 
         $admin = new User();
         $admin
-            ->setEmail("admin@amstamgram.com")
-            ->setUsername("admin")
-            ->setRoles(["ROLE_ADMIN"])
+            ->setEmail('admin@amstamgram.com')
+            ->setUsername('admin')
+            ->setRoles(['ROLE_ADMIN'])
             ->setPassword($this->hasher->hashPassword($admin,"admin"))
             ->setCreatedAt(new \DateTimeImmutable());
         $manager->persist($admin);
