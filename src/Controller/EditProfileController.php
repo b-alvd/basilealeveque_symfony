@@ -13,7 +13,7 @@ class EditProfileController extends AbstractController
     {
         
 
-        return $this->render('edit_profile_controler/index.html.twig', [
+        return $this->render('edit_profile/index.html.twig', [
             'controller_name' => 'EditProfileController',
         ]);
     }
